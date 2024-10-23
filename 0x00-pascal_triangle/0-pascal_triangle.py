@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # This module represents a function that returns the pascal triangle.
 
 def pascal_triangle(n):
