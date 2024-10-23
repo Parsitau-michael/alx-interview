@@ -29,6 +29,18 @@ Example:
 """
 
 def pascal_triangle(n):
+    """
+    Generate Pascal's Triangle up to the n-th row.
+
+    Parameters:
+    n (int): The number of rows of Pascal's Triangle to generate.
+             Must be a non-negative integer.
+
+    Returns:
+    List[List[int]]: A list of lists containing the values of Pascal's Triangle.
+                     Each inner list represents a row in the triangle.
+                     Returns an empty list if n is less than or equal to 0.
+    """
     if (n <= 0):
         return []
 
