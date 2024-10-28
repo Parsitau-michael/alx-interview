@@ -35,7 +35,7 @@ status_codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
 status_code_counts = {key: 0 for key in status_codes}
 
 
-def print_metrics(signal_number, frame):
+def print_metrics(signal_number=None, frame=None):
     """
     Prints the current metrics including total file size and counts of
     HTTP status codes.
@@ -55,31 +55,31 @@ def print_metrics(signal_number, frame):
     for code in sorted(status_code_counts):
         if status_code_counts[code] > 0:
             print("{}: {}".format(code, status_code_counts[code]))
-    print("File size: {}".format(total_file_size))
-    for code in sorted(status_code_counts):
-        if status_code_counts[code] > 0:
-            print("{}: {}".format(code, status_code_counts[code]))
 
 
 # Register signal handler
 signal.signal(signal.SIGINT, print_metrics)
 
 # processing each line from sys.stdin
-for line in sys.stdin:
-    line = line.strip()
-    match = re.match(regex, line)
+try:
+    for line in sys.stdin:
+        line = line.strip()
+        match = re.match(regex, line)
 
-    # Only process lines that match
-    if match:
-        line_count += 1
-        total_file_size += int(match.group('fs'))
-        status_code = match.group('sc')
-        if status_code in status_code_counts:
-            status_code_counts[status_code] += 1
+        # Only process lines that match
+        if match:
+            line_count += 1
+            total_file_size += int(match.group('fs'))
+            status_code = match.group('sc')
+            if status_code in status_code_counts:
+                status_code_counts[status_code] += 1
 
-        # Print metrics after every 10 lines
-        if line_count % 10 == 0:
-            print_metrics(None, None)
+            # Print metrics after every 10 lines
+            if line_count % 10 == 0:
+                print_metrics()
+except KeyboardInterrupt:
+    print_metrics()
+    raise
 
 # Print any remaining metrics
-print_metrics(None, None)
+print_metrics()
