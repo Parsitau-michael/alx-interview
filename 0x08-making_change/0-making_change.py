@@ -10,7 +10,7 @@ def makeChange(coins, total):
     """
     if total <= 0:
         return 0
-    
+
     n = len(coins)
 
     dp = [float('inf')] * (total + 1)
